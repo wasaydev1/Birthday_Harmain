@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotating Image Carousel with Flipped Backside</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            perspective: 1000px; /* Important for 3D effect */
+            width: 300px; /* Adjust as needed */
+            height: 200px; /* Adjust as needed */
+            position: relative;
+        }
+
+        .carousel {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d; /* Key for 3D children */
+            animation: rotateCarousel 15s infinite linear; /* Adjust animation duration */
+        }
+
+        .carousel:hover {
+            animation-play-state: paused; /* Pause on hover */
+        }
+
+        .carousel-item {
+            position: absolute;
+            width: 280px; /* Slightly less than container to show gaps */
+            border-radius: 10px;
+            height: 180px;
+            border: 5px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* background-color: #eee; Remove this as we'll have front/back faces */
+            display: flex; /* For centering content within front/back */
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: #333;
+            overflow: hidden;
+            transform-style: preserve-3d; /* Very important for flipping inner faces */
+        }
+
+        /* Front and Back faces styling */
+        .carousel-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; /* Hide the back of the element when facing away */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8em; /* Smaller font for text on back */
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box; /* Include padding in dimensions */
+        }
+
+        .carousel-front {
+            background-color: #eee; /* Default background */
+            
+        }
+
+        .carousel-back {
+            background-color: #333; /* Dark background for the back side */
+            transform: rotateY(180deg); /* Flip the back side horizontally */
+            color: #fff;
+            font-size: 1.2em;
+        }
+
+        .carousel-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures images cover the area */
+            border-radius: 15px;
+
+        }
+
+        /* Positions for each item - you'll need to adjust these based on the number of images */
+        .carousel-item:nth-child(1) {
+            transform: rotateY(0deg) translateZ(300px); /* Adjust translateZ for depth */
+        }
+        .carousel-item:nth-child(2) {
+            transform: rotateY(60deg) translateZ(300px);
+        }
+        .carousel-item:nth-child(3) {
+            transform: rotateY(120deg) translateZ(300px);
+        }
+        .carousel-item:nth-child(4) {
+            transform: rotateY(180deg) translateZ(300px);
+        }
+        .carousel-item:nth-child(5) {
+            transform: rotateY(240deg) translateZ(300px);
+        }
+        .carousel-item:nth-child(6) {
+            transform: rotateY(300deg) translateZ(300px);
+        }
+        /* Add more .carousel-item:nth-child(n) rules for more images */
+
+        @keyframes rotateCarousel {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-item">
+                <div class="carousel-face carousel-front">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgIG32Y_629Q_YhIrkrWf8iMjGWCDZZQ4xeA&s" alt="Birthday Image 1">
+                </div>
+                <div class="carousel-face carousel-back">
+                    <p>Best Wishes!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-face carousel-front">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgIG32Y_629Q_YhIrkrWf8iMjGWCDZZQ4xeA&s" alt="Birthday Image 2">
+                </div>
+                <div class="carousel-face carousel-back">
+                    <p>Enjoy Your Day!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-face carousel-front">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgIG32Y_629Q_YhIrkrWf8iMjGWCDZZQ4xeA&s" alt="Birthday Image 3">
+                </div>
+                <div class="carousel-face carousel-back">
+                    <p>Many Happy Returns!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-face carousel-front">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgIG32Y_629Q_YhIrkrWf8iMjGWCDZZQ4xeA&s" alt="Birthday Image 4">
+                </div>
+                <div class="carousel-face carousel-back">
+                    <p>Cheers to You!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-face carousel-front">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgIG32Y_629Q_YhIrkrWf8iMjGWCDZZQ4xeA&s" alt="Birthday Image 5">
+                </div>
+                <div class="carousel-face carousel-back">
+                    <p>Have a Blast!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-face carousel-front">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgIG32Y_629Q_YhIrkrWf8iMjGWCDZZQ4xeA&s" alt="Birthday Image 6">
+                </div>
+                <div class="carousel-face carousel-back">
+                    <p>Party Time!</p>
+                </https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgIG32Y_629Q_YhIrkrWf8iMjGWCDZZQ4xeA&s

@@ -1,0 +1,486 @@
+/* Universal Box-Sizing for easier layout */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*::selection {
+  background: transparent;
+  color: transparent;
+}
+:root {
+  --primary-color: #666; /* A vibrant, warm red for highlights */
+  --secondary-color: #4ecdc4; /* A refreshing teal for secondary accents */
+  --background-light: #f8f8f8; /* A very light off-white for sections */
+  --background-body: #f0f2f5; /* A light grey for the overall body background */
+  --text-dark: #333333; /* Standard dark text */
+  --text-light: #ffffff; /* White text */
+  --shadow-light: rgba(0, 0, 0, 0.08); /* Lighter shadow for subtle depth */
+  --shadow-medium: rgba(0, 0, 0, 0.15); /* Medium shadow for pop-out effects */
+  --border-radius-main: 20px; /* More pronounced rounded corners for the container */
+  --transition-speed: 0.3s ease-in-out; /* Standard transition time */
+}
+
+body {
+  padding: 50px;
+  font-family: "Open Sans", sans-serif; /* A clean, readable sans-serif font */
+  line-height: 1.7; /* Slightly increased line height for better readability */
+  color: var(--text-dark);
+  background-color: var(--background-body); /* Overall light grey background */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center content vertically too */
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  width: 100% !important;
+  position: relative;
+}
+
+.container {
+  width: 90%;
+  max-width: 1000px; /* Slightly adjusted max-width for a more compact feel */
+  background-color: var(--text-light);
+  border-radius: var(--border-radius-main);
+  overflow: hidden;
+  box-shadow: 0 15px 35px var(--shadow-medium); /* More prominent shadow */
+  display: flex; /* Use flexbox for main layout */
+  flex-direction: column; /* Stack sections vertically */
+}
+
+/* Header/Hero Section */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 450px; /* Slightly taller hero section */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--text-light);
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.65); /* A bit more darkening for contrast */
+  transition: transform var(--transition-speed);
+}
+
+.hero:hover .hero-image {
+  transform: scale(1.03); /* Subtle zoom on hover */
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.2)
+  ); /* Gradient overlay */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 1; /* Ensure overlay is above image but below text */
+}
+
+.hero h1 {
+  font-family: "Pacifico", cursive;
+  font-size: 4.2em; /* Larger main title */
+  margin-bottom: 15px;
+  text-shadow: 3px 3px 6px var(--shadow-medium); /* Stronger text shadow */
+  letter-spacing: 3px; /* Increased letter spacing for impact */
+  animation: fadeInDown 1s forwards; /* Animation for title */
+}
+
+.hero .subtitle {
+  font-size: 1.8em; /* Larger subtitle */
+  font-weight: 300;
+  text-shadow: 2px 2px 5px var(--shadow-medium);
+  max-width: 80%; /* Constrain subtitle width */
+  animation: fadeIn 1.5s forwards; /* Animation for subtitle */
+}
+
+/* General Section Styling */
+section {
+  padding: 60px 40px; /* More vertical padding for distinct sections */
+  background-color: var(--background-light);
+  border-bottom: 1px solid #eeeeee; /* Lighter border for separation */
+}
+
+section:last-of-type {
+  border-bottom: none;
+}
+
+section h2 {
+  font-family: "Pacifico", cursive;
+  font-size: 3em; /* Larger section titles */
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 35px;
+  position: relative;
+  animation: fadeInUp 0.8s forwards; /* Animation for section titles */
+}
+
+section h2::after {
+  content: "";
+  display: block;
+  width: 80px; /* Wider underline */
+  height: 4px; /* Thicker underline */
+  background-color: var(--primary-color);
+  margin: 20px auto 0; /* More space below title */
+  border-radius: 5px;
+  transform: scaleX(0); /* Start hidden for animation */
+  animation: scaleInX 1s forwards 0.5s; /* Animation for underline */
+}
+
+/* Message Section */
+.message-section {
+  background-color: var(--text-light); /* White background for the message */
+  text-align: center;
+  padding-top: 70px; /* More padding */
+  padding-bottom: 70px;
+  position: relative;
+  z-index: 2; /* Ensure it overlaps any potential shadows below */
+}
+
+.message-section p {
+  max-width: 850px; /* Slightly wider text block */
+  margin: 0 auto;
+  font-size: 1.15em; /* Slightly larger font size */
+  line-height: 2; /* More generous line height */
+  color: #444; /* Slightly softer text color */
+  animation: fadeIn 1.2s forwards 0.3s; /* Animation for message content */
+}
+
+.message-section p br {
+  display: block; /* Ensure line breaks create actual space */
+  content: "";
+  margin-bottom: 1em; /* Add more space between paragraphs */
+}
+
+/* Photo Gallery Section */
+.photo-gallery {
+  background-color: var(--background-light);
+  padding-bottom: 70px; /* More padding */
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(250px, 1fr)
+  ); /* Slightly smaller min-width for more columns */
+  gap: 30px; /* More space between grid items */
+  padding: 0 30px; /* Inner padding for the grid */
+}
+
+.gallery-item {
+  background-color: var(--text-light);
+  border-radius: 15px; /* More rounded corners for items */
+  overflow: hidden;
+  box-shadow: 0 8px 20px var(--shadow-light); /* Lighter shadow for items */
+  text-align: center;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; /* Smoother transitions */
+  cursor: pointer; /* Indicate interactivity */
+}
+
+.gallery-item:hover {
+  transform: translateY(-10px) scale(1.02); /* More pronounced lift and slight scale */
+  box-shadow: 0 12px 25px var(--shadow-medium); /* Stronger shadow on hover */
+}
+
+.gallery-item .divOne {
+  background-image: url("./imgs/harmainBakra.jpeg");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  width: 100%;
+  height: 220px; /* Slightly smaller fixed height for consistency */
+  object-fit: cover;
+  display: block;
+  transition: filter 0.3s ease; /* Transition for filter */
+}
+.gallery-item .divTwo {
+  background-image: url("./imgs/harmainCar.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 220px; /* Slightly smaller fixed height for consistency */
+  object-fit: cover;
+  display: block;
+  transition: filter 0.3s ease; /* Transition for filter */
+}
+.gallery-item .divThree {
+      background-image: url("./imgs/HarmainResturant.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 220px; /* Slightly smaller fixed height for consistency */
+  object-fit: cover;
+  display: block;
+  transition: filter 0.3s ease; /* Transition for filter */
+}
+.gallery-item .divFour {
+      background-image: url("./imgs/harmainTazbi.jpeg");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  width: 100%;
+  height: 220px; /* Slightly smaller fixed height for consistency */
+  object-fit: cover;
+  display: block;
+  transition: filter 0.3s ease; /* Transition for filter */
+}
+.gallery-item .divFive {
+      background-image: url("./imgs/harmainPF.jpeg");
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: cover;
+  width: 100%;
+  height: 220px; /* Slightly smaller fixed height for consistency */
+  object-fit: cover;
+  display: block;
+  transition: filter 0.3s ease; /* Transition for filter */
+}
+.gallery-item .divSix {
+      background-image: url("./imgs/harmain_Picnic.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 220px; /* Slightly smaller fixed height for consistency */
+  object-fit: cover;
+  display: block;
+  transition: filter 0.3s ease; /* Transition for filter */
+}
+
+.gallery-item:hover > div {
+  filter: brightness(0.95); /* Slight brighten on hover */
+}
+
+.gallery-item .caption {
+  padding: 18px 15px; /* More padding for captions */
+  font-size: 1em; /* Standard font size */
+  color: #666; /* Softer caption color */
+  font-weight: 700; /* Bolder captions */
+  text-transform: uppercase; /* Uppercase captions */
+  letter-spacing: 0.5px;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--primary-color); /* Primary color for footer */
+  color: var(--text-light);
+  text-align: center;
+  padding: 25px; /* More padding */
+  font-size: 0.95em;
+  border-bottom-left-radius: var(--border-radius-main);
+  border-bottom-right-radius: var(--border-radius-main);
+}
+
+.footer p {
+  margin-bottom: 8px; /* More space between footer lines */
+  font-weight: 300; /* Lighter font weight */
+}
+
+.footer p:last-child {
+  margin-bottom: 0;
+  font-style: italic; /* Italicize "Made with love" */
+}
+.NextPage {
+  text-align: center;
+  padding-top: 50px;
+}
+.NextPage a {
+  text-decoration: none;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  padding: 20px 30px;
+  background: var(--primary-color);
+  color: white;
+  font-family: "Pacifico";
+  word-spacing: 10px;
+  font-size: 22px;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+.NextPage a:hover {
+  box-shadow: 2px 2px 5px black;
+}
+.video-container {
+  top: 0;
+  line-height: 10px;
+  width: 100%;
+  position: absolute;
+  height: 330vh;
+  overflow: hidden;
+}
+.video-container video:last-child {
+  height: 200vh;
+}
+.container {
+  z-index: 10;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  /* ... other responsive rules ... */
+  .gallery-item img {
+    height: 180px;
+  }
+  /* Adjust specific image for smaller screens too */
+  .gallery-item.image_One img {
+    height: auto;
+    max-height: 180px;
+  }
+  /* ... other responsive rules ... */
+}
+
+@media (max-width: 480px) {
+  /* ... other responsive rules ... */
+  .gallery-item img {
+    height: 200px;
+  }
+  /* Adjust specific image for very small screens */
+  .gallery-item.image_One img {
+    height: auto;
+    max-height: 200px;
+  }
+  /* ... other responsive rules ... */
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleInX {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero {
+    height: 350px;
+  }
+
+  .hero h1 {
+    font-size: 3em;
+  }
+
+  .hero .subtitle {
+    font-size: 1.4em;
+  }
+
+  section {
+    padding: 40px 25px;
+  }
+
+  section h2 {
+    font-size: 2.5em;
+    margin-bottom: 25px;
+  }
+
+  .message-section p {
+    font-size: 1em;
+    padding: 0 10px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 0 15px;
+  }
+
+  .gallery-item img {
+    height: 180px;
+  }
+
+  .container {
+    width: 100%; /* Full width on smaller screens */
+    border-radius: 0; /* Remove border-radius on mobile for full bleed */
+    box-shadow: none; /* Remove box shadow on mobile */
+  }
+
+  body {
+    padding: 0; /* No padding on body for mobile */
+    align-items: flex-start; /* Align to top on mobile */
+  }
+
+  .footer {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 280px;
+  }
+  .hero h1 {
+    font-size: 2.5em;
+    letter-spacing: 1px;
+  }
+  .hero .subtitle {
+    font-size: 1.1em;
+  }
+  section {
+    padding: 30px 15px;
+  }
+  section h2 {
+    font-size: 2em;
+  }
+  .gallery-grid {
+    grid-template-columns: 1fr; /* Single column layout for very small screens */
+    padding: 0 10px;
+  }
+  .gallery-item img {
+    height: 200px; /* Maintain a reasonable height for single column images */
+  }
+}

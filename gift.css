@@ -1,0 +1,510 @@
+/* --- Default styles (for larger screens first - Desktop First Approach) --- */
+
+*::selection{
+    background: transparent;
+    color: transparent;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("./imgs/harmain_boxBushing.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    overflow: hidden; /* Hide overflowing elements initially */
+    font-family: 'Poppins', sans-serif; /* Modern font */
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; /* Space between gift box and image */
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden; /* Ensures confetti/balloons stay within */
+    flex-wrap: nowrap; /* Prevent wrapping by default on large screens */
+    padding: 20px; /* Add some padding around the container */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+}
+
+/* --- Gift Box Styling --- */
+.gift-box {
+    width: 250px; /* Slightly larger box */
+    height: 220px;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    perspective: 1000px; /* For box 3D effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.3)); /* Soft shadow */
+    z-index: 10; /* Make sure gift box is on top of confetti container */
+    /* Adjust initial position for desktop */
+    bottom: 0; /* Align to bottom for better visual on larger screens */
+    left: auto; /* Remove fixed left position */
+    right: 50px; /* Position it to the right, away from the image initially */
+    margin-left: auto; /* Push to the right if space allows */
+}
+
+.gift-box:active {
+    transform: scale(0.98) translateY(5px); /* Gentle squash on click */
+}
+
+.box-top {
+    width: 270px; /* Slightly wider */
+    height: 60px;
+    background: linear-gradient(to right, #e74c3c, #c0392b); /* Gradient red */
+    position: absolute;
+    top: -30px;
+    left: -10px;
+    border-radius: 8px;
+    z-index: 2;
+    transform-origin: bottom center; /* Open from bottom center */
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* More playful spring animation */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.box-body {
+    width: 250px;
+    height: 180px;
+    background: linear-gradient(to right, #c0392b, #e74c3c); /* Gradient red */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 8px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.ribbon-vertical, .ribbon-horizontal {
+    background: linear-gradient(to bottom, #ffd700, #ff8c00); /* Golden gradient */
+    position: absolute;
+    z-index: 3;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.ribbon-vertical {
+    width: 40px; /* Thicker ribbon */
+    height: 220px; /* Same height as box */
+    left: calc(50% - 20px); /* Center using calc */
+    top: 0;
+}
+
+.ribbon-horizontal {
+    width: 250px; /* Same width as box */
+    height: 40px; /* Thicker ribbon */
+    top: calc(50% - 20px); /* Center using calc */
+    left: 0;
+}
+
+.bow {
+    width: 90px; /* Larger bow */
+    height: 90px;
+    background: radial-gradient(circle at center, #ffec8b, #ffd700); /* Golden radial gradient */
+    border-radius: 50%;
+    position: absolute;
+    top: -70px; /* Position above the box-top */
+    left: calc(50% - 45px); /* Center using calc */
+    z-index: 4;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.bow::before, .bow::after {
+    content: '';
+    position: absolute;
+    width: 50px; /* Larger bow loops */
+    height: 50px;
+    background: radial-gradient(circle at center, #ffec8b, #ffd700);
+    border-radius: 50%;
+    top: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.bow::before {
+    left: -15px;
+    transform: rotate(45deg);
+}
+
+.bow::after {
+    right: -15px;
+    transform: rotate(-45deg);
+}
+
+.click-text {
+    position: absolute;
+    bottom: -70px; /* Adjust based on new box size */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.3em; /* Larger text */
+    color: #444;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+}
+
+/* --- Confetti & Balloon Styling (Animations remain the same) --- */
+.confetti-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: 1; /* Keep it below the gift box, but above default */
+}
+
+.confetti, .balloon {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    will-change: transform, opacity; /* Performance optimization */
+}
+
+/* Confetti styles */
+.confetti {
+    width: var(--size, 10px); /* Dynamic size */
+    height: var(--size, 10px);
+    background-color: var(--color); /* Dynamically set color */
+    border-radius: var(--border-radius, 50%); /* Dynamic shape */
+    animation: fadeAndFloat var(--duration, 8s) ease-in-out infinite; /* Default for falling confetti */
+    transform: translateZ(0) rotate(var(--rotate, 0deg)); /* Initial rotation */
+    filter: blur(var(--blur, 0px)); /* Optional blur for depth */
+}
+
+/* Balloon styles - Used for infinite UPWARD floating balloons */
+.balloon {
+    width: var(--width, 70px);
+    height: var(--height, 90px);
+    background-color: var(--color);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: balloonFloat var(--duration, 10s) ease-out infinite; /* Default for UPWARD floating balloons */
+    box-shadow: inset -8px -8px 10px rgba(0,0,0,0.3); /* Deeper shadow for 3D feel */
+    transform: translateZ(0) rotate(var(--rotate, 0deg)); /* Initial rotation */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em; /* Larger emoji */
+    color: #fff;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.4);
+    filter: brightness(1.1); /* Make colors pop */
+}
+
+.balloon::after { /* Balloon string */
+    content: '';
+    position: absolute;
+    width: 3px; /* Thicker string */
+    height: 40px; /* Longer string */
+    background-color: #aaa;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%) rotateY(20deg); /* Slight 3D tilt for string */
+    border-radius: 2px;
+}
+
+/* --- Animations (Remain the same as they are independent of layout) --- */
+.gift-box.open .box-top {
+    transform: rotateX(80deg) translateY(-40px) translateZ(20px); /* More dramatic 3D open */
+    opacity: 0.9; /* Slightly fade top */
+}
+
+@keyframes balloonFloat {
+    0% {
+        opacity: 0;
+        transform: translate3d(var(--x-start, 0px), var(--y-start, -100px), var(--z-start, 0px)) scale(0.3) rotateZ(var(--initial-rotate, 0deg));
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--x-end, 0px), var(--y-end, -1200px), var(--z-end, 0px)) scale(1.2) rotateZ(calc(var(--initial-rotate, 0deg) + 720deg)); /* Float up and off screen */
+    }
+}
+
+@keyframes boxBalloonFloatAndFall {
+    0% {
+        opacity: 0;
+        transform: translate3d(var(--x-start, 0px), var(--y-start, 0px), var(--z-start, -100px)) scale(0.3) rotateZ(var(--initial-rotate, 0deg));
+    }
+    15% {
+        opacity: 1;
+        transform: translate3d(var(--x-peak, 0px), var(--y-peak, -300px), var(--z-start, 0px)) scale(1) rotateZ(calc(var(--initial-rotate, 0deg) + 180deg));
+    }
+    85% {
+        opacity: 1;
+        transform: translate3d(var(--x-end, 0px), var(--y-mid-fall, 500px), var(--z-end, 0px)) scale(0.8) rotateZ(calc(var(--initial-rotate, 0deg) + 540deg));
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--x-end, 0px), var(--y-end, 1000px), var(--z-end, 0px)) scale(0.5) rotateZ(calc(var(--initial-rotate, 0deg) + 720deg));
+    }
+}
+
+@keyframes fadeAndFloat {
+    0% {
+        opacity: 0;
+        transform: translate3d(var(--x-start, 0px), var(--y-start, -100px), var(--z-start, 0px)) rotateZ(var(--initial-rotate, 0deg)) scale(0.5);
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--x-end, 0px), var(--y-end, 1000px), var(--z-end, 0px)) rotateZ(calc(var(--initial-rotate, 0deg) + 1080deg)) scale(0.8);
+    }
+}
+
+/* --- Picnic_pic Styling --- */
+.Picnic_pic {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 35%; /* Default width for larger screens */
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px black;
+    margin-right: 30px; /* Keep some margin on larger screens */
+    margin-left: auto; /* Push it to the left side */
+}
+
+.Picnic_pic img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    display: block; /* Remove extra space below image */
+}
+
+
+
+.baloonWishes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    z-index: 2;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    mix-blend-mode: color-burn;
+    overflow: hidden;
+    padding-left: 70px;
+}
+.baloonWishes img{
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+    position: absolute;
+    animation-name: BallonsWishes;
+    animation-duration: 7s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes BallonsWishes {
+        0% {
+            top: 1000px;
+        }
+        100%{
+            top: -100vh;
+        }
+
+}
+
+/* -------------------------------------------------------------------------- */
+/* Media Queries for Responsiveness                */
+/* -------------------------------------------------------------------------- */
+
+/* Tablet and Smaller Desktops (e.g., max-width 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: row; /* Keep them side-by-side if there's enough room */
+        justify-content: space-around; /* Distribute space more evenly */
+        padding: 15px;
+    }
+
+    .gift-box {
+        width: 220px;
+        height: 190px;
+        bottom: 0;
+        right: auto;
+        left: auto; /* Reset positioning */
+        margin: 0; /* Reset margins */
+    }
+
+    .box-top {
+        width: 240px;
+        height: 55px;
+        top: -25px;
+        left: -10px;
+    }
+
+    .box-body {
+        width: 220px;
+        height: 160px;
+    }
+
+    .ribbon-vertical {
+        height: 190px;
+    }
+
+    .ribbon-horizontal {
+        width: 220px;
+    }
+
+    .bow {
+        width: 80px;
+        height: 80px;
+        top: -60px;
+        left: calc(50% - 40px);
+    }
+
+    .bow::before, .bow::after {
+        width: 45px;
+        height: 45px;
+        top: 18px;
+    }
+
+    .click-text {
+        font-size: 1.1em;
+        bottom: -60px;
+    }
+
+    .Picnic_pic {
+        width: 45%; /* Slightly larger on tablets */
+        height: 70vh;
+        margin-right: 0; /* No specific right margin */
+        margin-left: 20px; /* Add a left margin to separate from gift box */
+    }
+}
+
+
+/* Smaller Tablets and Mobile Landscape (e.g., max-width 768px) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: center;
+        align-items: center;
+        height: auto; /* Allow container to grow */
+        min-height: 100vh; /* Ensure it still takes full height */
+        padding: 10px;
+    }
+
+    .gift-box {
+        width: 200px; /* Make gift box smaller */
+        height: 170px;
+        bottom: auto; /* Remove specific bottom positioning */
+        left: auto; /* Remove specific left positioning */
+        right: auto; /* Remove specific right positioning */
+        margin-left: auto;
+        margin-right: auto;
+        position: relative; /* Ensure it flows naturally */
+    }
+
+    .box-top {
+        width: 220px;
+        height: 50px;
+        top: -25px;
+        left: -10px;
+    }
+
+    .box-body {
+        width: 200px;
+        height: 140px;
+    }
+
+    .ribbon-vertical {
+        height: 170px;
+    }
+
+    .ribbon-horizontal {
+        width: 200px;
+    }
+
+    .bow {
+        width: 70px;
+        height: 70px;
+        top: -55px;
+        left: calc(50% - 35px);
+    }
+
+    .bow::before, .bow::after {
+        width: 40px;
+        height: 40px;
+        top: 15px;
+    }
+
+    .click-text {
+        font-size: 1em;
+        bottom: -50px;
+    }
+
+    .Picnic_pic {
+        width: 90%; /* Take up more width */
+        height: 50vh; /* Adjust height */
+        margin-top: 50px; /* Add space above the image */
+        margin-bottom: 20px; /* Space below if needed */
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Mobile Phones (e.g., max-width 480px) */
+@media (max-width: 480px) {
+    body {
+        background-position: top center; /* Adjust background for smaller screens */
+    }
+
+    .gift-box {
+        width: 180px; /* Even smaller gift box */
+        height: 150px;
+        margin-bottom: 60px;
+    }
+    .box-top {
+        width: 200px;
+        height: 45px;
+        top: -20px;
+        left: -10px;
+    }
+
+    .box-body {
+        width: 180px;
+        height: 120px;
+    }
+
+    .ribbon-vertical {
+        height: 150px;
+    }
+
+    .ribbon-horizontal {
+        width: 180px;
+    }
+
+    .bow {
+        width: 60px;
+        height: 60px;
+        top: -45px;
+        left: calc(50% - 30px);
+    }
+
+    .bow::before, .bow::after {
+        width: 35px;
+        height: 35px;
+        top: 12px;
+    }
+
+    .click-text {
+        font-size: 0.9em;
+        bottom: -40px;
+    }
+
+    .Picnic_pic {
+        width: 95%; /* Almost full width */
+        height: 40vh; /* Shorter height */
+        margin-top: 40px;
+    }
+}
