@@ -223,7 +223,7 @@ section h2::after {
   transition: filter 0.3s ease; /* Transition for filter */
 }
 .gallery-item .divThree {
-      background-image: url("./imgs/HarmainResturant.jpeg");
+  background-image: url("./imgs/HarmainResturant.jpeg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -234,9 +234,9 @@ section h2::after {
   transition: filter 0.3s ease; /* Transition for filter */
 }
 .gallery-item .divFour {
-      background-image: url("./imgs/harmainTazbi.jpeg");
+  background-image: url("./imgs/Harmain_wasay2.jpeg");
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: center;
   background-size: cover;
   width: 100%;
   height: 220px; /* Slightly smaller fixed height for consistency */
@@ -245,7 +245,7 @@ section h2::after {
   transition: filter 0.3s ease; /* Transition for filter */
 }
 .gallery-item .divFive {
-      background-image: url("./imgs/harmainPF.jpeg");
+  background-image: url("./imgs/harmainPF.jpeg");
   background-repeat: no-repeat;
   background-position: left;
   background-size: cover;
@@ -256,7 +256,7 @@ section h2::after {
   transition: filter 0.3s ease; /* Transition for filter */
 }
 .gallery-item .divSix {
-      background-image: url("./imgs/harmain_Picnic.jpeg");
+  background-image: url("./imgs/harmain_Picnic.jpeg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -351,6 +351,10 @@ section h2::after {
 }
 
 @media (max-width: 480px) {
+  .gallery-item .divFour {
+    height: 260px; /* Slightly smaller fixed height for consistency */
+  }
+
   /* ... other responsive rules ... */
   .gallery-item img {
     height: 200px;
