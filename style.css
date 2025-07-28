@@ -256,9 +256,9 @@ section h2::after {
   transition: filter 0.3s ease; /* Transition for filter */
 }
 .gallery-item .divSix {
-  background-image: url("./imgs/harmain_Picnic.jpeg");
+  background-image: url("./imgs/harmainTazbi.jpeg");
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top;
   background-size: cover;
   width: 100%;
   height: 220px; /* Slightly smaller fixed height for consistency */
